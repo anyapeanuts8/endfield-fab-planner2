@@ -6,7 +6,7 @@ import { Toolbar } from "../components/flow/Toolbar";
 import { NodeInspector } from "../components/flow/NodeInspector";
 import { apiClient } from "../api/client";
 
-export function FlowEditorPage() {
+export function FlowEditorPage({ hideHeader = false }: { hideHeader?: boolean }) {
   const { transportTypes, loaded, load } = useMasterStore();
   const { nodes, edges, diagramId, diagramName, undo, redo, past, future, cancelConnect } = useFlowStore();
 
@@ -51,27 +51,33 @@ export function FlowEditorPage() {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "#0f172a", color: "#e2e8f0" }}>
-      {/* ヘッダー */}
+    <div style={{ display: "flex", flexDirection: "column", height: "100%", background: "#0f172a", color: "#e2e8f0" }}>
+      {/* スタンドアロン時のみタイトルを表示 */}
+      {!hideHeader && (
+        <div style={{ padding: "8px 16px", background: "#1e293b", borderBottom: "1px solid #334155" }}>
+          <span style={{ fontWeight: "bold", fontSize: 16, color: "#e2e8f0" }}>Endfield Fab Planner</span>
+        </div>
+      )}
+
+      {/* サブヘッダー (保存ボタン等、常に表示) */}
       <div style={{
-        display: "flex", alignItems: "center", gap: 16,
-        padding: "8px 16px", background: "#1e293b", borderBottom: "1px solid #334155"
+        display: "flex", alignItems: "center", gap: 8,
+        padding: "4px 16px", background: "#1e293b", borderBottom: "1px solid #334155"
       }}>
-        <span style={{ fontWeight: "bold", fontSize: 16 }}>Endfield Fab Planner</span>
         <span style={{ color: "#64748b", fontSize: 12 }}>フロー図エディタ</span>
-        <div style={{ marginLeft: "auto", display: "flex", gap: 8, alignItems: "center" }}>
-          <span style={{ fontSize: 11, color: "#64748b" }}>
-            ノード: {nodes.length} | エッジ: {edges.length}
-          </span>
-          <span style={{ fontSize: 11, color: "#475569" }}>
-            ↩{past.length} ↪{future.length}
-          </span>
+        <span style={{ fontSize: 11, color: "#64748b", marginLeft: 8 }}>
+          ノード: {nodes.length} | エッジ: {edges.length}
+        </span>
+        <span style={{ fontSize: 11, color: "#475569" }}>
+          ↩{past.length} ↪{future.length}
+        </span>
+        <div style={{ marginLeft: "auto" }}>
           <button
             onClick={handleSave}
             style={{
-              padding: "6px 16px", borderRadius: 4,
+              padding: "4px 14px", borderRadius: 4,
               border: "1px solid #22c55e", background: "transparent",
-              color: "#22c55e", cursor: "pointer", fontSize: 13,
+              color: "#22c55e", cursor: "pointer", fontSize: 12,
             }}
           >
             💾 保存

@@ -6,7 +6,7 @@ echo "=== Endfield Fab Planner ==="
 # バックエンド起動
 echo "[1/2] Starting backend (http://localhost:8000)..."
 cd "$(dirname "$0")/backend"
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload &
+.venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload &
 BACKEND_PID=$!
 
 # フロントエンド起動

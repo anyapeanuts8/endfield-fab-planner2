@@ -59,3 +59,10 @@ export interface FlowDiagram {
 }
 
 export type EditorMode = "place" | "connect";
+
+export interface FacilityMasterCreate {
+  name: string;
+  width: number;
+  height: number;
+  ports: Port[];
+}
